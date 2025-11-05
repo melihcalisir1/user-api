@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Company;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -24,7 +25,7 @@ class UserService
             'name' => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/'], // Türkçe harfler ve boşluk
             'surname' => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/'], // Türkçe harfler ve boşluk
             'email' => 'required|email|unique:users',
-            'phone' => ['required', 'string', 'regex:/^[0-9]{13}$/'], // 13 haneli rakamlar
+            'phone' => ['required', 'string', 'regex:/^[0-9]{10}$/'], // 10 haneli rakamlar
         ]);
 
         if ($validator->fails()) {
@@ -44,4 +45,12 @@ class UserService
 
         return $this->repo->create($userData);
     }
+
+    // Kullanıcıları listeleme ve filtreleme
+    public function listUsers(array $filters = [])
+    {
+        // Filtreleme işlemini UserRepository'e ileterek yapıyoruz
+        return $this->repo->getAll($filters);
+    }
+
 }

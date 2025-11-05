@@ -29,4 +29,15 @@ class UserController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
+
+    public function index(Request $request)
+    {
+        // Filtreleme için opsiyonel parametreleri alıyoruz
+        $filters = $request->only(['company_id']);
+
+        $users = $this->service->listUsers($filters);
+
+        return response()->json($users);
+    }
+
 }
