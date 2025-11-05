@@ -59,4 +59,20 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $user = $this->service->deleteUser($id);
+
+            return response()->json([
+                'message' => 'Kullanıcı başarıyla silindi.',
+                'data' => $user
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

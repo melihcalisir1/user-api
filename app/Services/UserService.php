@@ -19,7 +19,6 @@ class UserService
 
     public function createUser(array $data)
     {
-        // Doğrulama
         $validator = Validator::make($data, [
             'company_name' => 'required|string|max:100',
             'name' => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/'], // Türkçe harfler ve boşluk
@@ -54,7 +53,11 @@ class UserService
 
     public function updateUser(array $data, $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::withTrashed()->findOrFail($id);
+
+        if ($user->trashed()) {
+            throw new \Exception('Silinmiş bir kullanıcı güncellenemez.');
+        }
 
         $validator = Validator::make($data, [
             'company_name' => 'required|string|max:100',
@@ -81,6 +84,23 @@ class UserService
             'email' => $data['email'],
             'phone' => $data['phone']
         ]);
+
+        return $user;
+    }
+
+    public function deleteUser($id)
+    {
+        $user = User::withTrashed()->find($id);
+
+        if (!$user) {
+            throw new \Exception('Kullanıcı bulunamadı.');
+        }
+
+        if ($user->trashed()) {
+            throw new \Exception('Bu kullanıcı zaten silinmiş.');
+        }
+
+        $user->delete();
 
         return $user;
     }

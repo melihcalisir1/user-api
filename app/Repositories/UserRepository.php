@@ -30,4 +30,12 @@ class UserRepository
 
         return $user;
     }
+
+    public function delete($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return $user;
+    }
 }
