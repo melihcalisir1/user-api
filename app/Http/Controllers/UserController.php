@@ -40,4 +40,23 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $user = $this->service->updateUser($request->all(), $id);
+
+            return response()->json([
+                'message' => 'Kullanıcı başarıyla güncellendi.',
+                'data' => $user
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

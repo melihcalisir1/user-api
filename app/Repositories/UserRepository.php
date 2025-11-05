@@ -23,4 +23,11 @@ class UserRepository
         return $query->get();
     }
 
+    public function update(array $data, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($data);
+
+        return $user;
+    }
 }
