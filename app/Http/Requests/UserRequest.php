@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'name'         => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/'],
             'surname'      => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/'],
             'email'        => ['required', 'email', 'unique:users,email,' . $id],
-            'phone'        => ['required', 'regex:/^[0-9]{10}$/'],
+            'phone'        => ['required', 'unique:users,phone,', 'regex:/^[0-9]{10}$/'],
         ];
     }
 
@@ -40,6 +40,7 @@ class UserRequest extends FormRequest
             'email.required'        => 'E-posta adresi zorunludur.',
             'email.unique'          => 'Bu e-posta adresi zaten kullanılıyor.',
             'phone.required'        => 'Telefon numarası zorunludur.',
+            'phone.unique'          => 'Bu telefon numarası zaten kayıtlı. Lütfen farklı bir numara giriniz.',
             'phone.regex'           => 'Telefon numarası 10 haneli olmalıdır.',
             'name.regex'            => 'İsim sadece harf ve boşluk içerebilir.',
             'surname.regex'         => 'Soyisim sadece harf ve boşluk içerebilir.',
