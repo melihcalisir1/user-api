@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\UserService;
-use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -15,22 +15,27 @@ class UserController extends Controller
         $this->service = $service;
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         try {
-            $user = $this->service->createUser($request->all());
+            $user = $this->service->createUser($request->validated());
+
             return response()->json([
                 'message' => 'Kullanıcı başarıyla eklendi.',
                 'data' => $user
             ], 201);
         } catch (ValidationException $e) {
-            return response()->json(['errors' => $e->errors()], 422);
+            return response()->json([
+                'errors' => $e->errors()
+            ], 422);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 500);
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
 
-    public function index(Request $request)
+    public function index(UserRequest $request)
     {
         // Filtreleme için opsiyonel parametreleri alıyoruz
         $filters = $request->only(['company_id']);
@@ -40,23 +45,16 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         try {
-            $user = $this->service->updateUser($request->all(), $id);
-
+            $user = $this->service->updateUser($request->validated(), $id);
             return response()->json([
                 'message' => 'Kullanıcı başarıyla güncellendi.',
                 'data' => $user
             ], 200);
-        } catch (ValidationException $e) {
-            return response()->json([
-                'errors' => $e->errors()
-            ], 422);
         } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 500);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 

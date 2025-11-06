@@ -19,18 +19,6 @@ class UserService
 
     public function createUser(array $data)
     {
-        $validator = Validator::make($data, [
-            'company_name' => 'required|string|max:100',
-            'name' => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/'], // Türkçe harfler ve boşluk
-            'surname' => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/'], // Türkçe harfler ve boşluk
-            'email' => 'required|email|unique:users',
-            'phone' => ['required', 'string', 'regex:/^[0-9]{10}$/'], // 10 haneli rakamlar
-        ]);
-
-        if ($validator->fails()) {
-            throw new ValidationException($validator);
-        }
-
         // Firma yoksa oluştur.
         $company = Company::firstOrCreate(['name' => $data['company_name']]);
 
@@ -57,18 +45,6 @@ class UserService
 
         if ($user->trashed()) {
             throw new \Exception('Silinmiş bir kullanıcı güncellenemez.');
-        }
-
-        $validator = Validator::make($data, [
-            'company_name' => 'required|string|max:100',
-            'name' => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/'], // Türkçe harfler ve boşluk
-            'surname' => ['required', 'string', 'max:50', 'regex:/^[a-zA-ZçÇğĞıİöÖşŞüÜ\s]+$/'], // Türkçe harfler ve boşluk
-            'email' => 'required|email|unique:users,email,' . $id,
-            'phone' => ['required', 'string', 'regex:/^[0-9]{10}$/'], // 10 haneli rakamlar
-        ]);
-
-        if ($validator->fails()) {
-            throw new ValidationException($validator);
         }
 
         $company = $user->company;
