@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\UserService;
 use App\Http\Requests\UserRequest;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -35,7 +36,7 @@ class UserController extends Controller
         }
     }
 
-    public function index(UserRequest $request)
+    public function index(Request $request)
     {
         // Filtreleme için opsiyonel parametreleri alıyoruz
         $filters = $request->only(['company_id']);
