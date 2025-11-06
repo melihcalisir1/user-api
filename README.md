@@ -29,6 +29,31 @@ API endpoint'leri `http://localhost:8000/api` adresinde erişilebilir olacaktır
 
 ---
 
+##  Database Import Guide
+
+Bu proje için veritabanı yedeği `database_backup/user_api_backup.sql` dosyasında yer almaktadır. Mevcut veritabanınızı oluşturduktan sonra aşağıdaki yöntemlerden size uygun olanı kullanarak verileri içe aktarabilirsiniz.
+
+###  Docker Kullanıcıları İçin
+
+Eğer MySQL bir Docker container içinde çalışıyorsa:
+
+```bash
+docker exec -i <mysql_container_name> \
+  mysql -u root -p<şifre> user_api < ./database_backup/user_api_backup.sql
+```
+
+###  Lokal MySQL (Docker Olmayan) Kullanıcıları İçin
+
+MySQL doğrudan makinenizde yüklüyse:
+
+```bash
+mysql -u root -p user_api < database_backup/user_api_backup.sql
+```
+
+Komutu çalıştırdıktan sonra şifreyi girin. İşlem tamamlandığında veriler veritabanınıza eklenecektir.
+
+---
+
 ## Teknolojiler
 
 - Laravel 11
