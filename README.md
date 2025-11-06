@@ -4,6 +4,8 @@ Laravel tabanlı kullanıcı yönetimi API'si. Bu proje, kullanıcı oluşturma,
 
 ## Kurulum
 
+> Not: Bu proje aktif geliştirmeyi `dev` branch'i üzerinde yürütüyor. Lütfen kurulumdan önce veya sonra `dev` branch'ini çektiğinizden emin olun.
+
 1. Bağımlılıkları yükleyin:
 ```bash
 composer install
@@ -28,6 +30,27 @@ php artisan serve
 API endpoint'leri `http://localhost:8000/api` adresinde erişilebilir olacaktır.
 
 ---
+
+## Geliştirme Branch'i: `dev`
+
+Projeyi klonladıktan sonra `dev` branch'ine geçerek en güncel geliştirme değişikliklerini çekin.
+
+Mevcut klasörde zaten bir git reposu varsa:
+
+```bash
+git fetch origin
+git checkout dev
+git pull origin dev
+```
+
+Projeyi yeni klonlayacaksanız doğrudan `dev` branch'ini çekin:
+
+```bash
+git clone -b dev --single-branch <repo_url>
+cd user-api
+```
+
+> `composer install` ve `.env`/migration adımlarını `dev` branch'indeyken çalıştırmanız önerilir.
 
 ##  Database Import Guide
 
