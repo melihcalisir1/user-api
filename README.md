@@ -43,6 +43,7 @@ Proje, Repository Pattern ve Service Layer kullanılarak geliştirilmiştir:
 - **Services**: `app/Services/UserService.php`
 - **Repositories**: `app/Repositories/UserRepository.php`
 - **Models**: `app/Models/User.php`, `app/Models/Company.php`
+- **Requests**: `app/Http/Requests/UserRequest.php`
 
 ---
 
@@ -59,7 +60,7 @@ Yeni bir kullanıcı oluşturur. Eğer şirket mevcut değilse otomatik olarak o
 **Request Body:**
 ```json
 {
-    "company_name": "Acme Corporation",
+    "company_name": "Smartup Network",
     "name": "Ahmet",
     "surname": "Yılmaz",
     "email": "ahmet.yilmaz@example.com",
